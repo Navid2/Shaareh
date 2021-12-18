@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import {Route, Switch} from 'react-router-dom';
 import PoemExplanation from "./pages/PoemExplanationPage/PoemExplanation";
 import ContributorPage from "./pages/ContributorPage/ContributorPage";
+import CategoriesPage from "./pages/CategoriesPage/CategoriesPage";
 
 const App:FC = (props) => {
 
@@ -17,6 +18,9 @@ const App:FC = (props) => {
       </Route>
       <Route path="/contributor/:contributor_id" exact>
         <ContributorPage/>
+      </Route>
+      <Route path="/categories" exact>
+        <CategoriesPage/>
       </Route>
     </Switch>
   </Layout>

@@ -1,0 +1,57 @@
+.categories-page {
+  justify-content: start;
+  align-items: center;
+}
+.categories-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+}
+.categories-list {
+  width: 100%;
+}
+.categories-list-item {
+	display: flex;
+	background: url(../../assets/photos/speech.jpg);
+	mask-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	box-shadow:rgba(0, 0, 0, 0.1) 2px 2px 4px;
+	border-radius: 4px;
+}
+.categories-list-item-container{
+	width: 100%;
+	padding: 10px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: linear-gradient(90deg,rgba(0, 0, 0, 0.6) 20%,rgba(0, 0, 0, 0.9) 90%);
+	border-radius: 4px;
+	cursor: pointer;
+	transition: .2s;
+}
+.categories-list-item-container:hover{
+	height: 70px;
+	transition: .2s;
+}
+.categories-list-item-title-wrapper{
+	display: flex;
+	height: fit-content;
+	align-items: center;
+}
+.categories-list-item-title-wrapper>.fa-hashtag{
+	margin-left:10px;
+}
+.category-controls{
+	height: fit-content;
+	width: fit-content;
+}
+.categories-list-item-controls>i{
+	margin-left: 10px;
+}
+.categories-title{
+	margin:10px 0;
+	font-weight: 800;
+}
