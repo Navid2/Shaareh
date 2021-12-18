@@ -1,0 +1,65 @@
+.category-post{
+  display: flex;
+  flex-direction:column;
+  background: rgba(255, 255, 255, 0.2);
+  align-items: center;
+  min-width: 250px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  margin:0 10px;
+}
+.category-post:last-child{
+  margin-left: 10px;
+  
+}
+.category-post-image{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  top:0;
+  bottom: 0;
+  border-radius: 10px;
+}
+.category-post:hover .category-post-details{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  transition:.2s;
+  box-shadow: none;
+  cursor: pointer;
+}
+.category-post-details{
+  background: transparent;
+  transition:.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  box-shadow:inset rgba(0, 0, 0, 0.9) 0px -50px 50px;
+  padding: 10px;
+}
+.category-post-details:hover{
+  display: flex;
+}
+.category-post-title{
+  align-self: flex-start;
+}
+.category-post-uploadtime{
+  align-self: flex-start;
+}
+.category-post:hover .category-post-title{
+  align-self: center;
+}
+
+.category-post:hover .category-post-uploadtime{
+  align-self: center;
+
+}

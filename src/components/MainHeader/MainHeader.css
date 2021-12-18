@@ -1,0 +1,80 @@
+.main-header{
+  background: url('../../assets/photos/Persian-Miniature-Painting-1920x760-e1558165952745.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  height: 40px;
+  width: 100%;
+  max-width: 100%;
+  transition: .4s;
+  min-height: fit-content;
+  display: flex;
+}
+.main-header:hover{
+  height: 60px;
+  transition: .4s;
+}
+.main-header>section {
+  background: linear-gradient(270deg,rgba(36, 36, 36, 0.8) 0%, rgb(36, 36, 36) 90%);
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height:100%;
+  width: 100%;
+}
+
+.main-header-transparent-logo{
+  height: 100%;
+  width: auto;
+  transition: .4s;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.main-header-left{
+  display: flex;
+  height:100%;
+}
+.main-header-right{
+  display: flex;
+  height:100%;
+  align-items: center;
+}
+/* .main-header-right > .fas {
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color:rgb(255, 198, 74);
+  background:rgba(48, 48, 48, 0.8);
+  padding: 8px;
+  cursor: pointer;
+  transition: .4s;
+  height: 100%;
+} */
+.mobile-navbar-trigger{
+  display: none;
+  background: rgba(37, 37, 37, 0);
+  text-shadow: black 2px 2px 20px;
+  color:rgb(224, 224, 224);
+  padding:10px;
+  margin-right:10px;
+  border-radius: 6px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.mobile-navbar-trigger:hover{
+  color:white;
+}
+@media (max-width:800px) {
+  .main-header-navbar{
+    display: none;
+  }
+  .mobile-navbar-trigger{
+    display: inline;
+  }
+  .main-header{
+    height: 60px;
+  }
+}

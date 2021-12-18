@@ -1,0 +1,26 @@
+.explanation-video-and-sections{
+  display: flex;
+  justify-content: center;
+  margin:15px 0;
+  height:400px;
+}
+.poem-explanation-video {
+  margin-right:10px;
+}
+
+@media (max-width:600px) {
+  .poem-explanation-sections{
+    display: none;
+  }
+  .poem-explanation-video {
+    margin-right:0px;
+    height: auto;
+  }
+}
+@media (max-height:600px) {
+  .explanation-video-and-sections{
+    height: 400px!important;
+    overflow: hidden;
+  }
+  
+}

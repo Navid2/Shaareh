@@ -1,0 +1,27 @@
+.explanation-section-container{
+  background: rgba(0,0,0, 0.25);
+  border-radius: 10px;
+  width: 300px;
+  height:400px;
+  min-height: 100%;
+  overflow: hidden;
+  padding:10px;
+  padding-left: 6px;
+}
+.explanation-section-list::-webkit-scrollbar{
+  background: rgb(37, 37, 37);
+  width:8px;
+  border-radius: 4px;
+  margin-right:10px;
+}
+.explanation-section-list::-webkit-scrollbar-thumb{
+  background: rgb(52, 80, 170);
+  border-radius: 4px;
+}
+.explanation-section-list{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height:100%;
+  padding-left: 5px;
+  transition:.2s;
+}
