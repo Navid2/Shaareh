@@ -58,20 +58,6 @@ const HomePage: FC = (props) => {
                             id={post.id}
                             key={index}
                           />
-                          <PoemVideoExplanationExcerpt
-                            title={post.title}
-                            dateText={shamsiDate}
-                            coverUrl={`${serverURI}${post.cover.url}`}
-                            id={post.id}
-                            key={index}
-                          />
-                          <PoemVideoExplanationExcerpt
-                            title={post.title}
-                            dateText={shamsiDate}
-                            coverUrl={`${serverURI}${post.cover.url}`}
-                            id={post.id}
-                            key={index}
-                          />
                         </>
                       );
                     })}
