@@ -1,4 +1,6 @@
-import { gql, useQuery } from "@apollo/client";
+import { ApolloError, gql, useQuery } from "@apollo/client";
+import { error } from "console";
+import { useEffect, useState } from "react";
 import { PoemVideoExplanation } from "../model/PoemVideoExplanation";
 import { Verse } from "../model/Verse";
 
@@ -43,7 +45,7 @@ export const useGetPoemsExcerpt = () => {
 	}
 };
 
-export const useGetPoem = (id: string) => {
+export const useGetPoem = (id: string,setLoading:React.Dispatch<React.SetStateAction<boolean | undefined>>,setError:React.Dispatch<React.SetStateAction<ApolloError | undefined>>,setPoem:React.Dispatch<React.SetStateAction<PoemVideoExplanation | null | undefined>>) => {
 	interface Poem {
 		id: string;
 		title: string;
@@ -104,11 +106,14 @@ export const useGetPoem = (id: string) => {
 		}
 	`;
 
-	const { loading, error, data } = useQuery(query);
+	const { loading:_loading, error:_error, data:_data } = useQuery(query);
+	
 
+	
+	
 	let typedData: PoemVideoExplanation | null = null;
-	if (!loading && !error) {
-		const videoSections = (data as { poem: Poem }).poem.videoSections.map(
+	if (!_loading && !_error) {
+		const videoSections = (_data as { poem: Poem }).poem.videoSections.map(
 			(videoSection) => {
 				const subsections = videoSection?.subsections?.map(
 					({ title, hour, minute, second }) => {
@@ -117,17 +122,26 @@ export const useGetPoem = (id: string) => {
 							time: hour * 60 * 60 + minute * 60 + second,
 						};
 					}
-				);
-				const time =
+					);
+					const time =
 					videoSection.time.hour * 60 * 60 +
 					videoSection.time.minute * 60 +
 					videoSection.time.second;
-				return { ...videoSection, time, subsections };
+					return { ...videoSection, time, subsections };
+				}
+				);
+				
+				typedData = { ...(_data as { poem: Poem }).poem, videoSections };
 			}
-		);
 
-		typedData = { ...(data as { poem: Poem }).poem, videoSections };
-  }
-  console.log(1);
-	return { loading, error, poem: typedData } as const;
-};
+			useEffect(()=>{
+				setLoading(_loading);
+				setError(_error);
+				setPoem(typedData);
+			},[_loading,_error,_data])
+
+			console.log(1);
+			
+			return null;
+		};
+		
