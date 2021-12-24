@@ -9,7 +9,6 @@ interface VideoComponent {
 	onPause: () => void;
   onSeeking?: () => void;
   onSeeked?:() => void;
-	onTimeUpdate: (e: number) => void;
 }
 
 const Video = forwardRef<HTMLVideoElement, VideoComponent>((props, ref) => {
@@ -32,9 +31,6 @@ const Video = forwardRef<HTMLVideoElement, VideoComponent>((props, ref) => {
         onSeeked={props.onSeeked?props.onSeeked:undefined}
         onSeeking={props.onSeeking?props.onSeeking:undefined}
 				controls
-				onTimeUpdate={(e: BaseSyntheticEvent) => {
-					props.onTimeUpdate(e.target.currentTime);
-				}}
 				onPlay={props.onPlay}
 				onPause={props.onPause}
 				playsInline

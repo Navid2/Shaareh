@@ -25,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "strapi": "cd ../strapi && npm run develop"
+    "strapi": "cd ../cms && npm run develop"
   },
   "eslintConfig": {
     "extends": [

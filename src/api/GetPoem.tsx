@@ -140,7 +140,6 @@ export const useGetPoem = (id: string,setLoading:React.Dispatch<React.SetStateAc
 				setPoem(typedData);
 			},[_loading,_error,_data])
 
-			console.log(1);
 			
 			return null;
 		};

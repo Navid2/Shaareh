@@ -1,181 +1,133 @@
-import {
-  FC,
-  Fragment,
-  Ref,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+// essentials
+import { FC, Fragment, Ref, useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { ApolloError } from "@apollo/client";
+
+// css
+import "./PoemExplanation.css";
+
+// components
 import PageComponent from "../../components/PageComponent/PageComponent";
 import ExplanationSectionContainer from "../../components/ExplanationSectionsContainer/ExplanationSectionContainer";
 import PoemScriptBox from "../../components/PoemScriptBox/PoemScriptBox";
 import Video from "../../components/Video/Video";
 
-import "./PoemExplanation.css";
-import { Section } from "../../model/Section";
-
-// import { poemExplanationData as poem } from "../../dummy-data/poem-explanation";
-import { Subsection } from "../../model/Subsection";
-import { useGetPoem } from "../../api/GetPoem";
-import { useEffect } from "react";
-import { ApolloError } from "@apollo/client";
+// models
+import {
+  RAW_SECTION_WITH_INDEX,
+  Section,
+  SectionWithIndex,
+} from "../../model/Section";
 import { PoemVideoExplanation } from "../../model/PoemVideoExplanation";
 
+// api hook
+import { useGetPoem } from "../../api/GetPoem";
+
+// helpers
+import { getCurrentSubsectionIndex } from "../../helpers/getCurrentVideoSubsection";
+import { getCurrentSection } from "../../helpers/getCurrentVideoSection";
+
+/*
+
+// dummy poem data
+import { poemExplanationData as poem } from "../../dummy-data/poem-explanation";
+
+*/
+
 const PoemExplanation: FC = (props) => {
-  console.log('page rendered');
+  console.log("page rerendered");
+
+  const TIME_UPDATE_FREQUENCY_MS = 1000;
+
+  // get seconds passed from video tag
+  const getSecondsPassed = () => {
+    return (videoRef.current as HTMLVideoElement).currentTime;
+  };
+  const setSecondsPassed = (timeInSeconds: number) => {
+    (videoRef.current as HTMLVideoElement).currentTime = timeInSeconds;
+  };
+
+  // get poem id for making request
   const id = useParams<{ poem_id: string }>().poem_id;
 
-  const RAW_SECTION = useMemo<SectionWithIndex>(
-    () => ({
-      title: "",
-      description: "",
-      firstExplanation: false,
-      time: 0,
-      verseIndex: null,
-      subsections: [],
-      sectionIndex: 0,
-    }),
-    []
+  // fetching the poem
+  const [loading, setLoading] = useState<boolean>();
+  const [error, setError] = useState<ApolloError | undefined>();
+  const [poem, setPoem] = useState<PoemVideoExplanation | null>();
+
+  useGetPoem(id, setLoading, setError, setPoem);
+
+  // boolean value to determine if time should be updated
+  const [updateTime, setUpdateTime] = useState<boolean>(true);
+
+  // boolean value to determine if the video was touched
+  const [videoIsTouched, setVideoIsTouched] = useState<boolean>(false);
+
+  // boolean value to represent playing status of video tag
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  // boolean value to determine if isPlaying should be updated or not
+  const [updateIsPlaying, setUpdateIsPlaying] = useState<boolean>(true);
+
+  // current video section
+  const [currentSection, setCurrentSection] = useState<SectionWithIndex>(
+    RAW_SECTION_WITH_INDEX
   );
 
-  
-	const [loading,setLoading] = useState<boolean>();
-	const [error,setError] = useState<ApolloError|undefined>();
-	const [poem,setPoem] = useState<PoemVideoExplanation|null>();
+  // current video subsection index
+  const [currentSubsectionIndex, setCurrentSubsectionIndex] = useState<
+    number | null
+  >(null);
 
-  useGetPoem(id,setLoading,setError,setPoem);
-  
-  const [secondsPassed, setSecondsPassed] = useState<number>(0);
-  const [updateTime, setUpdateTime] = useState<boolean>(true);
-  const [videoIsTouched, setVideoIsTouched] = useState<boolean>(false);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [updateIsPlaying, setUpdateIsPlaying] = useState<boolean>(true);
-  const [currentSection, setCurrentSection] =
-    useState<SectionWithIndex>(RAW_SECTION);
-
-
+  // video reference to provide us a connection to video tag
   const videoRef = useRef<HTMLVideoElement>();
 
-  // setting the current section
-
-  interface SectionWithIndex extends Section {
-    sectionIndex: number;
-  }
-  const getCurrentSection = useCallback(
-    (sections: Section[], secondsPassed: number) => {
-      let currentSection: SectionWithIndex = {
-        ...sections[0],
-        sectionIndex: 0,
-      };
-
-      if (sections.length === 0) {
-        return RAW_SECTION;
-      }
-
-      sections.map((videoSection, index) => {
-        const isFirstIteration = index === 0;
-        const isLastIteration = index === sections.length - 1;
-
-        //the case that it is the last iteration and the time passed last section starting point
-        if (isLastIteration && secondsPassed > videoSection.time) {
-          currentSection = { ...videoSection, sectionIndex: index };
-          return videoSection;
-        }
-
-        if (isFirstIteration && sections.length === 1) {
-          currentSection = { ...videoSection, sectionIndex: 0 };
-          return videoSection;
-        }
-        //the case that first iteration and we are behind the first section
-        if (isFirstIteration && secondsPassed < sections[1].time) {
-          currentSection = { ...videoSection, sectionIndex: 0 };
-          return videoSection;
-        }
-
-        //return if it was the first case
-        if (isFirstIteration) {
-          return videoSection;
-        }
-
-        //the case that the time passed is in between of the last iteration section and current iteration section
-        if (
-          sections[index - 1].time < secondsPassed &&
-          secondsPassed < videoSection.time
-        ) {
-          currentSection = {
-            ...sections[index - 1],
-            sectionIndex: index - 1,
-          };
-          return videoSection;
-        }
-
-        //decoration for linting tool
-        return videoSection;
-      });
-
-      return currentSection;
-    },
-    [RAW_SECTION]
-  );
-
+  // set the current section when the poem was first loaded
   useEffect(() => {
-    if (!error && !loading && poem) {
+    if (!error && !loading && poem && isPlaying) {
       setCurrentSection(
         getCurrentSection(
           poem.videoSections ? poem.videoSections : [],
-          secondsPassed
+          getSecondsPassed()
         )
       );
     }
-  }, [secondsPassed, error, loading, poem, getCurrentSection]);
+  }, [error, loading, poem, isPlaying]);
 
-  const getCurrentSubsectionIndex = useCallback(
-    (currentSection: Section, secondsPassed: number): number | null => {
-      let currentSubsectionIndex: number | null = null;
-      // extracting what subsection we are in
-      if (currentSection.subsections) {
-        (currentSection?.subsections as Subsection[]).map(
-          (subsection, index) => {
-            const isFirstIteration = index === 0;
-            const isLastIteration =
-              index ===
-              (currentSection?.subsections as Subsection[]).length - 1;
-            if (isFirstIteration && secondsPassed < subsection.time) {
-              // the first subsection is not yet touched
-              // null value should be returned as we are on the main section timespan
-              currentSubsectionIndex = -1;
-            } else if (isFirstIteration) {
-              // if it is the first iteration, and the time is not behind of first subsection, then in the other iterations it will be considered
-            } else if (isLastIteration && secondsPassed > subsection.time) {
-              // the last subsection must be returned
-              currentSubsectionIndex = index;
-            } else if (
-              secondsPassed >
-                (currentSection.subsections as Subsection[])[index - 1].time &&
-              secondsPassed < subsection.time
-            ) {
-              currentSubsectionIndex = index - 1;
-            }
-            return null;
-          }
-        );
-      }
-
-      return currentSubsectionIndex;
-    },
-    []
+  // getting current subsection from seconds passed
+  const updaterInterval = useRef<NodeJS.Timeout>(
+    setInterval(() => {}, TIME_UPDATE_FREQUENCY_MS)
   );
+  useEffect(() => {
+    clearInterval(updaterInterval.current);
+    if (isPlaying) {
+      updaterInterval.current = setInterval(() => {
+        // console.log(isPlaying ? "is being played":"is paused");
+        if (!loading && !error && poem && isPlaying) {
+          const currentSubsectionIndex = getCurrentSubsectionIndex(
+            poem.videoSections,
+            currentSection.sectionIndex,
+            getSecondsPassed(),
+            setCurrentSubsectionIndex
+          );
+          setCurrentSection(() => {
+            const currentSection = getCurrentSection(
+              poem.videoSections,
+              getSecondsPassed()
+            );
+            console.log(currentSection);
+            return currentSection;
+          });
+        }
+      }, TIME_UPDATE_FREQUENCY_MS);
+    }
+  }, [isPlaying]);
 
-  const currentSubsectionIndex = getCurrentSubsectionIndex(
-    currentSection as Section,
-    secondsPassed
-  );
-
+  // safe time to add to the section/subsection starting point to update the current section and subsection correctly
   const epsilonTime = 0.3;
 
+  // this handler gets executed when a verse is clicked and jumps the time to its first explanation section
   const verseClickHandler = (index: number) => {
     if (!videoIsTouched) {
       (videoRef.current as HTMLVideoElement).play();
@@ -196,6 +148,7 @@ const PoemExplanation: FC = (props) => {
     }
   };
 
+  // this handler gets executed whenever a section gets clicked and jumps the time to section start time
   const sectionChangeHandler = (time: number) => {
     if (!videoIsTouched) {
       (videoRef.current as HTMLVideoElement).play();
@@ -205,33 +158,29 @@ const PoemExplanation: FC = (props) => {
     setUpdateTime(false);
   };
 
-  const getSecondsPassed = () => {
-    return (videoRef.current as HTMLVideoElement).currentTime
-  }
-
-  const timeUpdateHandler = (seconds: number) => {
-    if (updateTime) {
-      setSecondsPassed(seconds);
-    }
-  };
-
+  // this handler gets executed whenever video tag play button gets clicked
   const playHandler = () => {
     setVideoIsTouched(true);
     if (updateIsPlaying) {
+      console.log("played");
       setIsPlaying(true);
     }
   };
 
+  // this handler gets executed whenever video tag pause button gets clicked
   const pauseHandler = () => {
     if (updateIsPlaying) {
+      console.log("paused");
       setIsPlaying(false);
     }
   };
 
+  // this handler gets executed whenever video tag is seeking the time (basically buffering the target time of video)
   const videoSeekingHandler = () => {
     setUpdateTime(false);
   };
 
+  // this handler gets executed whenever video tag seeked and buffered successfully
   const videoSeekedHandler = () => {
     setUpdateIsPlaying(true);
     if (isPlaying) {
@@ -240,8 +189,10 @@ const PoemExplanation: FC = (props) => {
     setUpdateTime(true);
   };
 
+  // keywords text state for seo
   const [keywordsText, setKeywordsText] = useState<string>("");
 
+  // updates (*sets) the keywords text when poem fetched successfully
   useEffect(() => {
     let keywords: string[] = [];
     poem?.videoSections.map((section) => {
@@ -257,6 +208,7 @@ const PoemExplanation: FC = (props) => {
     setKeywordsText(keywords.join(","));
   }, [poem]);
 
+  // jsx
   return (
     <PageComponent>
       {poem && (
@@ -281,7 +233,6 @@ const PoemExplanation: FC = (props) => {
               link={poem.videoURL}
               className="poem-explanation-video"
               ref={videoRef as Ref<HTMLVideoElement>}
-              onTimeUpdate={timeUpdateHandler}
               onPlay={playHandler}
               onPause={pauseHandler}
               onSeeking={videoSeekingHandler}
