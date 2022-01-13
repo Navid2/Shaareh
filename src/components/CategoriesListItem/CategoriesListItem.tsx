@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 
+import "./CategoriesListItem.css";
+
 interface CategoriesListItemPropType {
   title:string,
 	id:string,

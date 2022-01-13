@@ -1,5 +1,5 @@
 .home-page{
-  overflow-y:hidden;
+  overflow-y:auto;
   /* margin: 10px; */
   padding: 20px;
 }
@@ -15,8 +15,8 @@
   margin: 4px 0;
 }
 .categories-container{
-  overflow-y:auto;
   margin-top:20px;
+  height: fit-content;
   scroll-behavior: smooth;
 }
 .category{
@@ -24,10 +24,27 @@
   max-width: 100%;
   padding: 10px;
   margin: 10px 0;
-  background: rgba(0, 0, 0, 0.2);
+  background:rgb(32, 32, 32);
   padding-bottom:15px;
   border-radius: 10px;
   min-height: fit-content;
+  box-shadow: var(--default-box-shadow);
+  
+  animation-name:homepage-category-container-enter;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+}
+@keyframes homepage-category-container-enter {
+  from{
+    opacity: 0;
+    transform: scaleX(0.8) translateX(10px);
+  }
+  to{
+    opacity: 1;
+    transform: scaleX(1) translateX(0);
+  }
 }
 .category-title-container{
   margin:5px;
@@ -39,6 +56,24 @@
   cursor:pointer;
   transition: .1s;
   margin-right:15px;
+  
+  opacity: 0;
+  animation-name:homepage-category-title-enter;
+  animation-duration: .5s;
+  animation-delay: .5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+}
+@keyframes homepage-category-title-enter {
+  from{
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to{
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }
 .category-title-container:hover{
   background: rgba(255, 255, 255, 0.1);
@@ -52,8 +87,8 @@
 .category-title{
   font-weight: 800;
   font-size: 19px;
-  transform:scale(1);
   transition: .4s;
+  
 }
 .category-title-container:hover>.category-link-icon{
   visibility: visible;
@@ -71,7 +106,26 @@
 .category-posts{
   display:flex;
   overflow-x:auto;
-  padding-bottom: 20px;
+  padding: 10px;
+  padding-top: 0;
+
+  opacity: 0;
+  animation-name:homepage-category-posts-enter;
+  animation-duration: .5s;
+  animation-delay: .5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease;
+}
+@keyframes homepage-category-posts-enter {
+  from{
+    opacity: 0;
+    transform: translateX(4px);
+  }
+  to{
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }
 .category-posts::-webkit-scrollbar{
   background: rgb(56, 56, 56);

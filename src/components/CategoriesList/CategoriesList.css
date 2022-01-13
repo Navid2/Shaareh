@@ -1,0 +1,8 @@
+.categories-list {
+	width: 70%;
+}
+@media (max-width:600px) {
+	.categories-list {
+		width: 100%;
+	}
+}

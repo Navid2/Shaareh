@@ -10,10 +10,10 @@ import {
   ApolloProvider
 } from "@apollo/client";
 
-export const serverURI = 'http://localhost:1337';
+export const cmsURI = 'http://localhost:1337';
 
 const client = new ApolloClient({
-  uri: `${serverURI}/graphql`,
+  uri: `${cmsURI}/graphql`,
   cache: new InMemoryCache()
 });
 

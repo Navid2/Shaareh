@@ -5,7 +5,7 @@ import { useGetPoemsExcerpt } from "../../api/GetPoem";
 import PoemVideoExplanationExcerpt from "../../components/PoemVideoExplanationExcerpt/PoemVideoExplanationExcerpt";
 import PageComponent from "../../components/PageComponent/PageComponent";
 
-import { serverURI } from "../..";
+import { cmsURI } from "../..";
 
 import "./HomePage.css";
 import HomepageIntroduction from "../../components/HomepageIntroduction/HompepageIntroduction";
@@ -54,7 +54,7 @@ const HomePage: FC = (props) => {
                           <PoemVideoExplanationExcerpt
                             title={post.title}
                             dateText={shamsiDate}
-                            coverUrl={`${serverURI}${post.cover.url}`}
+                            coverUrl={`${cmsURI}${post.cover.url}`}
                             id={post.id}
                             key={index}
                           />
