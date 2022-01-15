@@ -2,20 +2,12 @@ import { ApolloError, gql, useQuery } from "@apollo/client";
 import { error } from "console";
 import { useEffect, useState } from "react";
 import { PoemVideoExplanation } from "../model/PoemVideoExplanation";
+import { PoemVideoExplanationExcerptCategory } from "../model/PoemVideoExplanationExcerptCategory";
 import { Verse } from "../model/Verse";
 
+
+
 export const useGetPoemsExcerpt = () => {
-	interface PoemVideoExplanationExcerptCategory {
-		id: string;
-		title: string;
-		poems: PoemVideoExplanationExcerpt[];
-	}
-	interface PoemVideoExplanationExcerpt {
-		id: string;
-		title: string;
-		created_at: string;
-		cover: { url: string };
-	}
 	const query = gql`
 		query {
 			poemCategories(sort: "updated_at:desc", limit: 5) {

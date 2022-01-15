@@ -1,0 +1,17 @@
+.categories-container::-webkit-scrollbar{
+  padding: 4px;
+  width: 10px;
+}
+.categories-container::-webkit-scrollbar-thumb{
+  background: rgba(255, 255, 255, 0.15);
+  transition: .4s;
+  border-radius: 3px;
+  margin: 4px 0;
+}
+.categories-container{
+  margin-top:20px;
+  height: fit-content;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+}

@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { NavlinkData } from "../MainHeader/MainHeader";
 
 import './NavigationModal.css';
+import NavigationModalItem from "./NavigationModalItem/NavigationModalItem";
 interface NavigationModalProps {
   addresses:NavlinkData[]
 }
@@ -11,13 +12,14 @@ interface NavigationModalProps {
 const NavigationModal:FC<NavigationModalProps> = props => {
   return createPortal(
   <nav className="mobile-navigation-modal">
-    <ul>
+    <div className="mobile-navigation-modal-controls">
+      <div className="mobile-navigation-modal-button close-button">
+        <i className="fas fa-times"></i>
+      </div>
+    </div>
+    <ul className="mobile-navlink-list">
       {props.addresses.map((navlinkData)=>
-      <li>
-        <NavLink to={navlinkData.path} >
-          {navlinkData.title}
-        </NavLink>
-      </li>
+      <NavigationModalItem title={navlinkData.title} path={navlinkData.path} icon_class={navlinkData.icon_class} key={navlinkData.title}/>
       )}
     </ul>
   </nav>,document.getElementById('modal-root') as Element)

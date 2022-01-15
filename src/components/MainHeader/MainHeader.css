@@ -35,24 +35,14 @@
 .main-header-left{
   display: flex;
   height:100%;
+  margin-left:5%;
 }
 .main-header-right{
   display: flex;
   height:100%;
   align-items: center;
+  margin-right:5%;
 }
-/* .main-header-right > .fas {
-  height: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color:rgb(255, 198, 74);
-  background:rgba(48, 48, 48, 0.8);
-  padding: 8px;
-  cursor: pointer;
-  transition: .4s;
-  height: 100%;
-} */
 .mobile-navbar-trigger{
   display: none;
   background: rgba(37, 37, 37, 0);

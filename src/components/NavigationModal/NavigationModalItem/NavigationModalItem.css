@@ -1,0 +1,27 @@
+.mobile-navlink-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:10px 20px;
+  width: 100%;
+  margin:4px;
+  background: var(--secondary-background-color);
+  border-radius: 10px;
+  box-shadow: var(--default-box-shadow);
+  transition: .1s;
+}
+.mobile-navlink-item:active{
+  box-shadow: none;
+  transition: .1s;
+}
+.mobile-navlink-item-container{
+  width: 100%;
+  display: flex;
+}
+.mobile-navlink{
+  width: 100%;
+  display: flex;
+}
+.mobile-navlink-title{
+  font-weight: 800;
+}
