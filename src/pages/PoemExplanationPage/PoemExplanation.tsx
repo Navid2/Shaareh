@@ -16,7 +16,6 @@ import Video from "../../components/Video/Video";
 // models
 import {
   RAW_SECTION_WITH_INDEX,
-  Section,
   SectionWithIndex,
 } from "../../model/Section";
 import { PoemVideoExplanation } from "../../model/PoemVideoExplanation";

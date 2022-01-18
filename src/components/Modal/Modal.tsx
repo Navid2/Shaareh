@@ -2,8 +2,10 @@ import { FC, useState } from "react";
 import { createPortal } from "react-dom";
 import Backdrop from "../Backdrop/Backdrop";
 
+import "./Modal.css";
+
 interface ModalPropType {
-  exit:()=>void;
+  exit:(duration:number)=>void;
 }
 
 const Modal: FC<ModalPropType> = (props) => {
@@ -12,6 +14,7 @@ const Modal: FC<ModalPropType> = (props) => {
   const modalCloseHandler = (exit_duration:number) => {
     // close modal
     setBackdropExit(true);
+    props.exit(exit_duration);
     setTimeout(()=>{
       setBackdropExit(false);
     },exit_duration*1000);
@@ -19,10 +22,10 @@ const Modal: FC<ModalPropType> = (props) => {
 
   return createPortal(
     <>
-     <Backdrop onClick={modalCloseHandler} exit={false}/>
-      <section className="mobile-navigation-modal">
+     <Backdrop onClick={modalCloseHandler} exit={backdropExit}/>
+      <section className="modal">
         <div className="modal-controls">
-          <div className="mobile-navigation-modal-button close-button">
+          <div className="modal-button close-button" onClick={()=>modalCloseHandler(0.5)}>
             <i className="fas fa-times"></i>
           </div>
         </div>

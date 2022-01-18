@@ -62,9 +62,26 @@
     display: none;
   }
   .mobile-navbar-trigger{
-    display: inline;
+    display: flex;
+    background: var(--secondary-background-color);
+    padding: 6px 8px;
+    box-shadow: var(--default-box-shadow);
+    transition: .3s;
+    
+  }
+  .mobile-navbar-trigger:hover{
+    box-shadow: none;
+    transition: .3s;
   }
   .main-header{
-    height: 60px;
+    height: 50px;
+    background: var(--primary-background-color);
+  }
+  .main-header:hover{
+    height: 50px;
+  }
+  .main-header>section {
+    background: transparent;
+    padding: 5px 0;
   }
 }

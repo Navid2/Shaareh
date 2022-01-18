@@ -3,8 +3,10 @@ import { FC, useContext, useState } from "react";
 import transparent_logo from '../../assets/logo/transparent_logo.png';
 import { NavModalContext } from "../../store/nav-modal-context";
 import Backdrop from "../Backdrop/Backdrop";
+import Modal from "../Modal/Modal";
 import Navbar from "../Navbar/Navbar";
 import NavigationModal from "../NavigationModal/NavigationModal";
+import NavigationModalItem from "../NavigationModal/NavigationModalItem/NavigationModalItem";
 import './MainHeader.css';
 
 export interface NavlinkData {
@@ -38,8 +40,7 @@ const MainHeader:FC = props => {
   return <header className="main-header">
     <section>
       <div className="main-header-right">
-        {navModalContext.isOpen&&<Backdrop exit={backdropExit} onClick={backdropClickHandler}/>}
-        {navModalContext.isOpen&&<NavigationModal addresses={addresses}/>}
+        {navModalContext.isOpen&&<NavigationModal addresses={addresses} onClose={backdropClickHandler}/>}
         <Navbar addresses={addresses} className="main-header-navbar"/>
         <i className="mobile-navbar-trigger fas fa-bars" onClick={navModalContext.open}/>
       </div>
