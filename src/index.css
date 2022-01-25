@@ -18,6 +18,7 @@
   --default-box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   --primary-background-color: rgb(32, 32, 32);
   --secondary-background-color:rgb(45, 45, 56);
+  --light-text-color:rgb(59, 192, 233);
 }
 
 li{
@@ -57,7 +58,7 @@ code {
 }
 
 i{
-  font-family: 'Font Awesome 5 Free'!important;
+  font-family: 'Font Awesome 5 Free','Font Awesome 5 Brands'!important;
 }
 *::-webkit-scrollbar{
   padding: 4px;

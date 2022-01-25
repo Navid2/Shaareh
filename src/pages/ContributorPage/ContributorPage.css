@@ -3,3 +3,136 @@
   justify-content: center;
   align-items: center;
 }
+.profile-card{
+  display: flex;
+  background: var(--primary-background-color);
+  box-shadow: var(--default-box-shadow);
+  border-radius: 8px;
+  padding:10px;
+  height: 400px;
+}
+.contributor-profile{
+  width: 300px;
+  padding:10px;
+  background: var(--secondary-background-color);
+  box-shadow: var(--default-box-shadow);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  overflow: auto;
+}
+.profile-photo{
+  min-height:120px;
+  min-width: 120px;
+  max-height:120px;
+  max-width: 120px;
+  margin:10px;
+  box-shadow: -2px -2px 18px rgba(0, 0, 0, 1) inset;
+  align-self: center;
+}
+.basic-info{
+  margin-top:10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.full-name{
+  font-weight: 800;
+}
+.status-list{
+  width: 100%;
+}
+.status-item{
+  display: flex;
+  /* align-items: center; */
+  justify-content: flex-start;
+  margin-bottom: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  padding:6px 10px;
+  /* background: var(--primary-background-color); */
+}
+.status-item:hover{
+  color:var(--light-text-color);
+}
+.status-item>i{
+  margin-left:8px;
+  margin-top: 3px;
+  color:inherit;
+}
+.status-text{
+  font-family: 'Poppins','IRANYekan'!important;
+  overflow:hidden;
+  max-lines: 1;
+  color:inherit;
+  /* font-size: 14px; */
+}
+.user-about{
+  width: 100%;
+  padding: 10px;
+}
+.user-about>h4{
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+.user-about>p{
+  text-align: right;
+  font-weight: 400;
+  font-size: 14px;
+}
+.contributions{
+  margin-right: 10px;
+  height: 100%;
+  width: 300px;
+  padding:2px 0;
+  display: flex;
+  flex-direction: column;
+}
+.contributions-list{
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
+  padding-left: 6px;
+  overflow: auto;
+}
+.contribution-item{
+  display: flex;
+  align-items: center;
+  background: var(--secondary-background-color);
+  box-shadow: var(--default-box-shadow);
+  width: 100%;
+  min-height:48px;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom:8px;
+  cursor: pointer;
+}
+.contribution-item:last-child{
+  margin-bottom:0;
+}
+.contribution-item>.post-cover{
+  min-width: 80px;
+  max-width: 80px;
+  width: 80px;
+  height: 100%;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.6) inset;
+}
+.contribution-info{
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  padding:0 10px;
+  width:100%;
+  overflow: hidden;
+}
+.contribution-info>.post-title{
+  white-space: nowrap;
+}
+.contribution-info>.contributor-role{
+  font-size: 12px;
+}

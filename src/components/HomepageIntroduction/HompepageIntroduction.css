@@ -20,7 +20,7 @@
   }
   .introduction .title {
     font-weight: 900;
-    color: rgb(59, 192, 233);
+    color: var(--light-text-color);
     text-shadow: rgba(105, 194, 221, 0.3) 2px 2px 20px;
     font-size: 40px;
     word-spacing: 4px;
